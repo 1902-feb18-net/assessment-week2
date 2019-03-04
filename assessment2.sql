@@ -1,7 +1,7 @@
 --create schema assessment
-drop table assessment.Customer
-drop table assessment.Product
-drop table assessment.Orders
+--drop table assessment.Customer
+--drop table assessment.Product
+--drop table assessment.Orders
 
 
 --drop table.assessment.Customer
