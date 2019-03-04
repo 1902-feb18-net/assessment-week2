@@ -31,13 +31,66 @@ create table assessment.Product (
 --drop table assessment.Orders
 create table assessment.Orders (
 	OrdersID int not null primary key identity(1,1),
-	Total money,
-	CustomerID int not null,
-	OrderTime Datetime2 default(CURRENT_TIMESTAMP),
-	constraint Fk_Orders_To_Customer Foreign Key (CustomerID) references Comic.Customer(CustomerID) on update cascade 
+	CustomerID int,
+	ProductID int,
+	constraint Fk_Orders_To_Customer Foreign Key (CustomerID) references assessment.Customer(CustomerID) on update cascade,
+	constraint Fk_Orders_To_Product Foreign Key (CustomerID) references assessment.product(ID) on update cascade 
 )
 
 
 
+insert into assessment.Product(Name,Price) values 
+		('Astonishing X-Men',4.99),
+		('Justice League of America',4.99),
+		('New Avengers',4.99),
+		('Batman',4.99),
+		('Amazing Spider-Man',4.99)
 
+
+		
+insert into assessment.Customer (FirstName, LastName, CardNumber) values
+		('Rhonda','Rubio',65343467),
+		('Lucy','Rubio',56732345),
+		('Matt','Akers',79887434)
+
+
+insert into assessment.Orders (CustomerID,ProductID) values 
+		(1,4),
+		(1,2),
+		(3,5)
+
+
+insert into assessment.Product(name, Price) values ('Iphone', 200.00)
+
+
+insert into assessment.Customer(FirstName,LastName,CardNumber) values ('Tina', 'Smith', 34095498)
+
+
+--hardcoded method
+insert into assessment.Orders(CustomerID,ProductID) values
+		(4,6)
+
+
+select OrdersID
+from assessment.Orders
+where assessment.Orders.CustomerID in ( 
+	select CustomerID
+	from assessment.Customer
+	where assessment.Customer.FirstName = 'Tina'
+	)
+
+
+select count(ProductID) * 200 As Total
+from assessment.Orders
+where assessment.Orders.ProductID  in ( 
+	select ProductID
+	from assessment.Product
+	where ID = 6
+	)
+
+
+
+update assessment.Product
+set Price = 250.00
+where Name = 'Iphone'
 
